@@ -8,9 +8,8 @@ class App extends React.Component{
     super(props);
     this.state={
       items:[
-        { id:0, title:"hello1", done : true },
-        { id:1, title:"hello2", done : false },
-        { id:2, title:"hello3", done : false }]
+      
+      ]
     }
   }
 
@@ -22,11 +21,23 @@ class App extends React.Component{
     this.setState({items:thisItems});
     console.log("items : ",this.state.items);
   }
+
+
+
+  delete = (item) =>{
+    console.log("delete called");
+    const thisItems = this.state.items;
+    console.log("before : ",this.state.items);
+    const newItems = thisItems.filter((e)=>e.id !== item.id);
+    this.setState({items:newItems}, ()=>{
+      console.log("update items :",this.state.items)
+    });
+  }
   render(){
     var todoItems = this.state.items.length > 0 && (
       <Paper style={{margin:16}}>
         <List>
-          {this.state.items.map((item,idx)=>(<Todo item={item} key={item.id}/>))}
+          {this.state.items.map((item,idx)=>(<Todo item={item} key={item.id} delete={this.delete}/>))}
         </List>
       </Paper>
     )
